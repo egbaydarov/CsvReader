@@ -1,0 +1,57 @@
+﻿<Window x:Class="csv_reader_wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:csv_reader_wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        
+        >
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <ToolBarTray  DockPanel.Dock="Top">
+                <ToolBar >
+                    <Button Click="Open_Clicked" Content="Open" VerticalAlignment="Stretch" />
+                    <Button Click="Save_Clicked" Content="Save"  VerticalAlignment="Stretch"/>
+                    <Button Click="Save_As_Clicked" Content="Save As" VerticalAlignment="Stretch" Margin="0,0,14,0" />
+                    <Label Content="Edit:" FontStyle="Oblique" VerticalAlignment="Stretch"/>
+                    <Button Click="AddRow_Clicked"  VerticalAlignment="Stretch" Margin="0,0,14,0">
+                        <Button.Content>
+                            <TextBlock><Bold>Add Row</Bold></TextBlock>
+                        </Button.Content>
+                    </Button>
+                    <Label Content="Rows Count:" FontStyle="Oblique" VerticalAlignment="Stretch" Margin="0,0,0,0"/>
+                    <TextBox x:Name="RowsCount" Margin="0,0,0,-0.4" Width="35" Text="1000" TextChanged="RowsCount_TextChanged"/>
+                    <Label Content="Filter: " FontStyle="Oblique" VerticalAlignment="Stretch"/>
+                    <ComboBox x:Name="ToFilterComboBox" Margin="0,0,0,-0.4" Width="86">
+                        <ComboBoxItem>AdmArea</ComboBoxItem>
+                        <ComboBoxItem>District</ComboBoxItem>
+                    </ComboBox>
+                    <TextBox x:Name="FILTEr" Margin="0,0,0,-0.4" Width="67" Text="Filter Data"/>
+                    <Button Click="Filter_Clicked"  VerticalAlignment="Stretch" Margin="0,0,14,0">
+                        <Button.Content>
+                            <TextBlock><Bold>Filter</Bold></TextBlock>
+                        </Button.Content>
+                    </Button>
+                    <Label Content="Sort: " FontStyle="Oblique" VerticalAlignment="Stretch"/>
+                    <ComboBox x:Name="ToSortComboBox" Margin="0,0,0,-0.4" Width="86">
+                        <ComboBoxItem>FullName</ComboBoxItem>
+                        <ComboBoxItem>District</ComboBoxItem>
+                    </ComboBox>
+                    <Button Click="Sort_Clicked" VerticalAlignment="Stretch" Margin="0,0,14,0">
+                        <Button.Content>
+                            <TextBlock><Bold>Sort</Bold></TextBlock>
+                        </Button.Content>
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+        </DockPanel>
+        <DataGrid  Grid.Row="1" x:Name="dataGridView1" CellEditEnding="DataGridView1_CellEditEnding"/>
+    </Grid>
+</Window>

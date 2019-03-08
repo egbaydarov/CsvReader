@@ -1,0 +1,62 @@
+﻿<Window x:Class="csv_reader_wpf.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:csv_reader_wpf"
+        mc:Ignorable="d"
+        Title="Window1" Height="404.7" Width="687.4" MinWidth="687.4" MinHeight="404.7" MaxWidth="687.4" MaxHeight="404.7">
+    <Grid>
+        <Label x:Name="CommonName"  Content="CommonName" HorizontalAlignment="Left" Margin="16,151,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="FullName"  Content="FullName" HorizontalAlignment="Left" Margin="16,94,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ShortName"  Content="ShortName" HorizontalAlignment="Left" Margin="16,16,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ChiefOrg"  Content="ChiefOrg" HorizontalAlignment="Left" Margin="16,42,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="AdmArea"  Content="AdmArea" HorizontalAlignment="Left" Margin="16,68,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="District"  Content="District" HorizontalAlignment="Left" Margin="16,182,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Address"  Content="Address" HorizontalAlignment="Left" Margin="16,120,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ChiefNAme"  Content="ChiefName" HorizontalAlignment="Left" Margin="16,213,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ChiefPosition"  Content="ChiefPostion" HorizontalAlignment="Left" Margin="16,244,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="PublicPhone"  Content="PublicPhone" HorizontalAlignment="Left" Margin="16,275,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Fax"  Content="Fax" HorizontalAlignment="Left" Margin="16,301,0,0" VerticalAlignment="Top"/>
+
+        <Label x:Name="Email"  Content="Email" HorizontalAlignment="Left" Margin="335,151,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="WorkingHours"  Content="WorkingHours" HorizontalAlignment="Left" Margin="335,94,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="ClarificationOfWorkingHours"  Content="ClarificationOfWorkingHours" HorizontalAlignment="Left" Margin="335,16,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="WebSite"  Content="WebSite" HorizontalAlignment="Left" Margin="335,42,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="OKPO"  Content="OKPO" HorizontalAlignment="Left" Margin="335,68,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="INN"  Content="INN" HorizontalAlignment="Left" Margin="335,186,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="NumberOfHalls"  Content="NumberOfHails" HorizontalAlignment="Left" Margin="335,120,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="TotalSeatsAmount"  Content="TotalSeatsAmount" HorizontalAlignment="Left" Margin="335,213,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="X_WGS"  Content="X_WGS" HorizontalAlignment="Left" Margin="335,244,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Y_WGS"  Content="Y_WGS" HorizontalAlignment="Left" Margin="335,275,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="GLOBALID"  Content="GLOBALID" HorizontalAlignment="Left" Margin="335,301,0,0" VerticalAlignment="Top"/>
+
+        <TextBox x:Name="CommonNameT" Text="Label" HorizontalAlignment="Left" Margin="120,155,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="FullNameT"  Text="Label" HorizontalAlignment="Left" Margin="120,98,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ShortNameT"  Text="Label" HorizontalAlignment="Left" Margin="120,20,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ChiefOrgT"  Text="Label" HorizontalAlignment="Left" Margin="120,46,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="AdmAreaT"  Text="Label" HorizontalAlignment="Left" Margin="120,72,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="DistrictT"  Text="Label" HorizontalAlignment="Left" Margin="120,186,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="AddressT"  Text="Label" HorizontalAlignment="Left" Margin="120,124,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ChiefNAmeT"  Text="Label" HorizontalAlignment="Left" Margin="120,217,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ChiefPositionT"  Text="Label" HorizontalAlignment="Left" Margin="120,248,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="PublicPhoneT"  Text="Label" HorizontalAlignment="Left" Margin="120,279,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="FaxT"  Text="Label" HorizontalAlignment="Left" Margin="120,305,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="EmailT"  Text="Label" HorizontalAlignment="Left" Margin="500,155,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="WorkingHoursT"  Text="Label" HorizontalAlignment="Left" Margin="500,98,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="ClarificationOfWorkingHoursT"  Text="Label" HorizontalAlignment="Left" Margin="500,20,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="WebSiteT"  Text="Label" HorizontalAlignment="Left" Margin="500,46,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="OKPOT"  Text="Label" HorizontalAlignment="Left" Margin="500,72,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="INNT"  Text="Label" HorizontalAlignment="Left" Margin="500,186,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="NumberOfHallsT"  Text="Label" HorizontalAlignment="Left" Margin="500,124,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="TotalSeatsAmountT"  Text="Label" HorizontalAlignment="Left" Margin="500,217,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="X_WGST"  Text="Label" HorizontalAlignment="Left" Margin="500,248,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Y_WGST"  Text="Label" HorizontalAlignment="Left" Margin="500,279,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="GLOBALIDT"  Text="Label" HorizontalAlignment="Left" Margin="500,305,0,0" VerticalAlignment="Top"/>
+
+
+        <Button Content="Add" HorizontalAlignment="Left" Margin="565,335,0,0" VerticalAlignment="Top" Width="95" Height="30" Click="Button_Click"/>
+        <Button Content="Add To file" HorizontalAlignment="Left" Margin="445,335,0,0" VerticalAlignment="Top" Width="89" Height="30" Click="Burfdsf"/>
+
+    </Grid>
+</Window>
