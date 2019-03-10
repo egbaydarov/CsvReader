@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:csv_reader_wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="450" Width="957.3"
         
         >
     <Grid >
@@ -15,8 +15,8 @@
             <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0">
-            <ToolBarTray  DockPanel.Dock="Top">
-                <ToolBar >
+            <ToolBarTray  DockPanel.Dock="Top" HorizontalAlignment="Stretch" Width="952">
+                <ToolBar Margin="0,0,-93.6,0" >
                     <Button Click="Open_Clicked" Content="Open" VerticalAlignment="Stretch" />
                     <Button Click="Save_Clicked" Content="Save"  VerticalAlignment="Stretch"/>
                     <Button Click="Save_As_Clicked" Content="Save As" VerticalAlignment="Stretch" Margin="0,0,14,0" />
@@ -26,8 +26,10 @@
                             <TextBlock><Bold>Add Row</Bold></TextBlock>
                         </Button.Content>
                     </Button>
-                    <Label Content="Rows Count:" FontStyle="Oblique" VerticalAlignment="Stretch" Margin="0,0,0,0"/>
-                    <TextBox x:Name="RowsCount" Margin="0,0,0,-0.4" Width="35" Text="1000" TextChanged="RowsCount_TextChanged"/>
+                    <Label Content="Show rows from:" FontStyle="Oblique" VerticalAlignment="Stretch" Margin="0,0,0,0"/>
+                    <TextBox x:Name="RowsFrom" Margin="0,0,0,-0.4" Width="35" Text="1" TextChanged="RowsCount_TextChanged1"/>
+                    <Label Content="To"/>
+                    <TextBox x:Name="RowsTo" Width="35" Text="100" TextChanged="RowsCount_TextChanged2"/>
                     <Label Content="Filter: " FontStyle="Oblique" VerticalAlignment="Stretch"/>
                     <ComboBox x:Name="ToFilterComboBox" Margin="0,0,0,-0.4" Width="86">
                         <ComboBoxItem>AdmArea</ComboBoxItem>

@@ -181,6 +181,14 @@ namespace csv_reader_wpf
         public string Y_WGS { get; set; }
         public string GLOBALID { get; set; }
         #endregion
+        public override string ToString()
+        {
+            string res = "";
+            for (int i = 0; i < 23; i++)
+                res += this[i] + ";"; 
+            res += "\r\n";
+            return res;
+        }
     }
 
 }

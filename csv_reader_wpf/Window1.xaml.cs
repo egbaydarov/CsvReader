@@ -12,7 +12,8 @@ namespace csv_reader_wpf
     /// </summary>
     public partial class Window1 : Window
     {
-
+        Cinema cin;
+        GridViewModel obj;
         MainWindow main;
         public Window1(MainWindow main)
         {
@@ -163,13 +164,12 @@ namespace csv_reader_wpf
             try
             {
                 var str = new List<string>();
-                str.Add(main.content.Count.ToString());
+                str.Add((main.content.Count + 1).ToString());
                 for (int i = 1; i < 23; i++)
                 {
                     if (this[i].Text.IndexOf(';') != -1)
                     {
-                        MessageBox.Show($"Incorrect values.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
+                        throw new Exception();
                     }
                     str.Add(this[i].Text);
                 }
@@ -181,79 +181,41 @@ namespace csv_reader_wpf
                 }
                 else
                 {
-                    MessageBox.Show($"Incorrect values.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    throw new Exception();
                 }
-                var cin = new Cinema(str,reg);
-                var obj = new GridViewModel(cin);
+                cin = new Cinema(str, reg);
+                obj = new GridViewModel(cin);
                 main.dataGridView1.ItemsSource = null;
-                if (main.content.Count == int.Parse(main.RowsCount.Text))
+                if (main.content.Count == MainWindow.MAXROWSCOUNT)
                 {
-                    MessageBox.Show($"Max value of rows reached.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+
+                    throw new Exception();
                 }
+                main.Cinemas.Add(cin);
                 main.content.Add(obj);
-                main.dataGridView1.ItemsSource = main.content;
+                main.rowsTo++;
+                main.RowsTo.Text = main.rowsTo.ToString();
+                main.UpdateGrid();
             }
             catch
             {
                 MessageBox.Show($"Incorrect values.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         private void Burfdsf(object sender, RoutedEventArgs e)
         {
-
             try
             {
-                var str = new List<string>();
-                str.Add(main.content.Count.ToString());
-                for (int i = 1; i < 23; i++)
-                {
-                    if (this[i].Text.IndexOf(';') != -1)
-                    {
-                        MessageBox.Show($"Incorrect values.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    str.Add(this[i].Text);
-                }
-                Region reg;
-                if (this[5].Text.IndexOf(';') == -1 && this[6].Text.IndexOf(';') == -1)
-                {
-                    reg = new Region(this[6].Text, this[5].Text);
-                    str.RemoveRange(5, 2);
-                }
-                else
-                {
-                    MessageBox.Show($"Incorrect values.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                var cin = new Cinema(str, reg);
-                var obj = new GridViewModel(cin);
-                main.dataGridView1.ItemsSource = null;
-                if (main.content.Count == int.Parse(main.RowsCount.Text))
-                {
-                    MessageBox.Show($"Max value of rows reached.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                main.content.Add(obj);
-                main.dataGridView1.ItemsSource = main.content;
-                if(String.IsNullOrEmpty(main.currentpath))
+                Button_Click(sender, e);
+                if (String.IsNullOrEmpty(main.currentpath))
                 {
                     MessageBox.Show($"Open or create file before save.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                string str2 = $"{main.content.Count};";
-                for (int i = 1; i < 23; i++)
-                {
-                    if (this[i].Text.IndexOf(';') != -1)
-                    {
-                        MessageBox.Show($"Incorrect values.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    str2 += this[i].Text + ";";
-                }
-                str2 += "\r\n";
-                File.AppendAllText(main.currentpath, str2, Encoding.Unicode);
+                File.AppendAllText(main.currentpath, obj.ToString(), Encoding.Unicode);
+                
             }
             catch
             {

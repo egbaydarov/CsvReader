@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace csv_reader_wpf
 {
@@ -18,68 +19,72 @@ namespace csv_reader_wpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        const int ROWSCOUNT = 1000;
-        int rowscount;
-        Window1 addrowwindow;
+        public const int MAXROWSCOUNT = 100000;
+        public int rowsFrom = 1, rowsTo = 1;
+
+        public Window1 addrowwindow;
         public string currentpath;
-        OpenFileDialog dialog;
+
         public List<Cinema> Cinemas = new List<Cinema>();
         List<Region> regions = new List<Region>();
         public List<GridViewModel> content = new List<GridViewModel>();
         public List<GridViewModel> edited = null;
+
         const string header = "ROWNUM;CommonName;FullName;ShortName;ChiefOrg;AdmArea;District;" +
             "Address;ChiefName;ChiefPosition;PublicPhone;Fax;Email;WorkingHours;" +
-            "ClarificationOfWorkingHours;WebSite;OKPO;INN;NumberOfHalls;TotalSeatsAmount;X_WGS;Y_WGS;GLOBALID;";
+            "ClarificationOfWorkingHours;WebSite;OKPO;INN;NumberOfHalls;TotalSeatsAmount;X_WGS;Y_WGS;GLOBALID;" + "\r\n";
         public MainWindow()
         {
-            try
-            {
-                InitializeComponent();
-                dataGridView1.ItemsSource = content;
-                rowscount = int.Parse(RowsCount.Text);
-            }
-            catch (Exception er)
-            {
-                RowsCount.Text = "200";
-                rowscount = 200;
-                MessageBox.Show($"Incorrect value for rows count." + er.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            InitializeComponent();
+            dataGridView1.ItemsSource = content;
         }
-
+        public void UpdateGrid()
+        {
+            dataGridView1.ItemsSource = null;
+            content.Clear();
+            
+            for (int i = rowsFrom  - 1; i < rowsTo; i++)
+            {
+                content.Add(Cinemas[i].ToGridView);
+            }
+            RowsTo.Text = rowsTo.ToString();
+            dataGridView1.ItemsSource = content;
+        }
 
         private void Open_Clicked(object sender, RoutedEventArgs e)
         {
             try
             {
-                dataGridView1.ItemsSource = null;
-                content.Clear();
+                Cinemas.Clear();
 
                 List<List<string>> data = new List<List<string>>();
-                dialog = new OpenFileDialog();
+                OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "CSV Files|*.csv";
                 dialog.ShowDialog();
+                if (String.IsNullOrEmpty(dialog.FileName))
+                    return;
+                else
+                {
+                    var stRows = new List<string>(File.ReadAllLines(dialog.FileName));
 
-                var stRows = new List<string>(File.ReadAllLines(dialog.FileName));
-                Cinema.IsValid(File.ReadAllText(dialog.FileName)); // проверка на количество ';'
+                    Cinema.IsValid(File.ReadAllText(dialog.FileName)); // проверка на количество ';'
 
 
-                for (int i = 1; i < stRows.Count; i++)
-                    data.Add(new List<string>(stRows[i].Split(';')));
+                    for (int i = 1; i < stRows.Count; i++)
+                        data.Add(new List<string>(stRows[i].Split(';')));
 
-
+                }
                 for (var i = 0; i < data.Count; i++)
                 {
                     var region = new Region(data[i][5], data[i][6]);
                     data[i].RemoveRange(5, 2);
                     if (regions.IndexOf(region) == -1)
                         regions.Add(region);
-                    if (content.Count == rowscount)
-                        break;
                     Cinemas.Add(new Cinema(data[i], region));
-                    content.Add(Cinemas[Cinemas.Count - 1].ToGridView);
                 }
                 currentpath = dialog.FileName;
-                dataGridView1.ItemsSource = content;
+                rowsTo = Cinemas.Count();
+                UpdateGrid();
             }
             catch (Exception er)
             {
@@ -87,27 +92,32 @@ namespace csv_reader_wpf
             }
         }
 
-        private void Save_Clicked(object sender, RoutedEventArgs e)
+        private async void Save_Clicked(object sender, RoutedEventArgs e)
         {
             try
             {
-                string res = GridToString();
-                Cinema.IsValid(res);
-                File.WriteAllText(currentpath, res, Encoding.Unicode);
-                MessageBox.Show("File Saved.", $"Succesfull", MessageBoxButton.OK, MessageBoxImage.Information);
+                File.WriteAllText(currentpath, header, Encoding.Unicode);
+                using (var wrt = new StreamWriter(currentpath, append: true, encoding: Encoding.Unicode))
+                {
+                    for (int i = 0; i < content.Count; i++)
+                    {
+                        await wrt.WriteAsync(content[i].ToString());
+                    }
+                    MessageBox.Show("File Saved.", $"Succesfull", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show($"Can't save file." + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Incorrect values.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            
         }
 
-        private void Save_As_Clicked(object sender, RoutedEventArgs e)
+        private async void Save_As_Clicked(object sender, RoutedEventArgs e)
         {
+
             try
             {
-                string res = GridToString();
-                Cinema.IsValid(res);
                 SaveFileDialog s = new SaveFileDialog();
                 s.DefaultExt = ".csv";
                 s.AddExtension = true;
@@ -116,9 +126,15 @@ namespace csv_reader_wpf
                 bool? result = s.ShowDialog();
                 if (result == true)
                 {
-                    File.WriteAllText(s.FileName, res, Encoding.Unicode);
-                    currentpath = s.FileName;
-                    MessageBox.Show("File Saved.", $"Succesfull", MessageBoxButton.OK, MessageBoxImage.Information);
+                    File.WriteAllText(s.FileName, header, Encoding.Unicode);
+                    using (var wrt = new StreamWriter(s.FileName, append: true, encoding: Encoding.Unicode))
+                    {
+                        for (int i = 0; i < content.Count; i++)
+                        {
+                            await wrt.WriteAsync(content[i].ToString());
+                        }
+                        MessageBox.Show("File Saved.", $"Succesfull", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
                 }
 
             }
@@ -129,42 +145,26 @@ namespace csv_reader_wpf
             }
         }
 
-        public string GridToString()
-        {
-            try
-            {
-                dataGridView1.ItemsSource = null;
-                if (edited != null)
-                    content = edited;
-                edited = null;
-                dataGridView1.ItemsSource = content;
-                string res = header+ "\r\n";
-
-                for (int i = 0; i < content.Count; i++)
-                {
-                    for (int j = 0; j < 23; j++)
-                    {
-                        res += content[i][j] + ";";
-                    }
-                    res += "\r\n";
-                }
-                return res;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Can't convert grid to csv.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return null;
-            }
-        }
+       
         private void AddRow_Clicked(object sender, RoutedEventArgs e)
         {
-            if (content.Count == int.Parse(RowsCount.Text))
+            if (content.Count == MAXROWSCOUNT)
             {
                 MessageBox.Show($"Max value of rows reached.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            addrowwindow = new Window1(this);
-            addrowwindow.Show();
+            if (addrowwindow == null)
+            {
+                addrowwindow = new Window1(this);
+                addrowwindow.Show();
+            }
+            else
+            {
+                addrowwindow.Close();
+                addrowwindow = null;
+                addrowwindow = new Window1(this);
+                addrowwindow.Show();
+            }
         }
 
         private void DataGridView1_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -185,22 +185,28 @@ namespace csv_reader_wpf
 
         private void Sort_Clicked(object sender, RoutedEventArgs e)
         {
+
+            GridViewModel[] temp = new GridViewModel[content.Count];
             try
             {
                 switch (ToSortComboBox.Text)
                 {
                     case "District":
-                        content.Sort((a, b) => a.District.CompareTo(b.District));
+                        content.CopyTo(temp);
+                        edited = temp.ToList();
+                        edited.Sort((a, b) => a.District.CompareTo(b.District));
                         dataGridView1.ItemsSource = null;
-                        dataGridView1.ItemsSource = content;
+                        dataGridView1.ItemsSource = edited;
                         break;
                     case "FullName":
-                        content.Sort((a, b) => a.FullName.CompareTo(b.FullName));
+                        content.CopyTo(temp);
+                        edited = temp.ToList();
+                        edited.Sort((a, b) => a.FullName.CompareTo(b.FullName));
                         dataGridView1.ItemsSource = null;
-                        dataGridView1.ItemsSource = content;
+                        dataGridView1.ItemsSource = edited;
                         break;
                     default:
-                        MessageBox.Show("Choose column in Combo box", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Choose column in the Combo box", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
                 }
 
@@ -213,6 +219,7 @@ namespace csv_reader_wpf
 
         private void Filter_Clicked(object sender, RoutedEventArgs e)
         {
+            GridViewModel[] temp = new GridViewModel[content.Count];
             try
             {
                 if (String.IsNullOrEmpty(FILTEr.Text))
@@ -222,9 +229,10 @@ namespace csv_reader_wpf
                 }
                 switch (ToFilterComboBox.Text)
                 {
-                    
+
                     case "District":
-                        edited = content
+                        content.CopyTo(temp);
+                        edited = temp.ToList()
                             .AsQueryable()
                             .Where(x => x.District.Contains(FILTEr.Text))
                             .ToList();
@@ -233,7 +241,8 @@ namespace csv_reader_wpf
 
                         break;
                     case "AdmArea":
-                        edited = content
+                        content.CopyTo(temp);
+                        edited = temp.ToList()
                             .AsQueryable()
                             .Where(x => x.AdmArea.Contains(FILTEr.Text))
                             .ToList();
@@ -251,21 +260,63 @@ namespace csv_reader_wpf
             }
         }
 
-        private void RowsCount_TextChanged(object sender, TextChangedEventArgs e)
+        private void RowsCount_TextChanged1(object sender, TextChangedEventArgs e)
         {
-            try
+            if (IsLoaded)
             {
-                rowscount = int.Parse(RowsCount.Text);
-                if (rowscount > ROWSCOUNT)
-                    throw new Exception("Rows Count cant be more than 1000");
-            }
+                TextBox tb;
+                try
+                {
+                    tb = (sender as TextBox);
+                    if (!int.TryParse(tb.Text, out rowsFrom))
+                        throw new IncorrectCinemaDataException("Value should be number");
+                    if (rowsTo - rowsFrom > MAXROWSCOUNT)
+                        throw new IncorrectCinemaDataException($"Max rows count is {MAXROWSCOUNT}");
+                    if (rowsTo > Cinemas.Count || rowsFrom < 1)
+                        throw new IncorrectCinemaDataException($"Rows count out of range");
+                    if (rowsTo < rowsFrom)
+                        throw new IncorrectCinemaDataException($"Left value less than right value");
+                    UpdateGrid();
+                }
 
-            catch (Exception er)
-            {
-                RowsCount.Text = "200";
-                rowscount = 200;
-                MessageBox.Show($"Incorrect value for rows count." + er.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                catch (Exception er)
+                {
+                    tb = (sender as TextBox);
+                    tb.Text = "1";
+                    rowsFrom = 1;
+                    MessageBox.Show($"Incorrect value for rows count. " + er.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
+
+        private void RowsCount_TextChanged2(object sender, TextChangedEventArgs e)
+        {
+            if (IsLoaded)
+            {
+                TextBox tb;
+                try
+                {
+                    tb = (sender as TextBox);
+                    if (!int.TryParse(tb.Text, out rowsTo))
+                        throw new IncorrectCinemaDataException("Value should be number");
+                    if (rowsTo - rowsFrom > MAXROWSCOUNT)
+                        throw new IncorrectCinemaDataException($"Max rows count is {MAXROWSCOUNT}");
+                    if (rowsTo > Cinemas.Count || rowsFrom < 1)
+                        throw new IncorrectCinemaDataException($"Rows count out of range");
+                    if (rowsTo < rowsFrom)
+                        throw new IncorrectCinemaDataException($"Left value less than right value");
+                    UpdateGrid();
+                }
+
+                catch (Exception er)
+                {
+                    tb = (sender as TextBox);
+                    tb.Text = Cinemas.Count.ToString();
+                    rowsTo = Cinemas.Count;
+                    MessageBox.Show($"Incorrect data in range. " + er.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
     }
 }
