@@ -8,13 +8,26 @@ using System.Windows.Controls;
 namespace csv_reader_wpf
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Класс создания новой записи в таблице
     /// </summary>
     public partial class Window1 : Window
     {
+        /// <summary>
+        /// Объект кинотеатра
+        /// </summary>
         Cinema cin;
+        /// <summary>
+        /// Объект для создания представления кинотеатра в таблице
+        /// </summary>
         GridViewModel obj;
+        /// <summary>
+        /// ссылка на основное окно
+        /// </summary>
         MainWindow main;
+        /// <summary>
+        /// конструктор окна создания записи кинотеатра
+        /// </summary>
+        /// <param name="main"></param>
         public Window1(MainWindow main)
         {
             this.main = main;
@@ -26,7 +39,11 @@ namespace csv_reader_wpf
                 this[i].MaxWidth = 200;
             }
         }
-
+        /// <summary>
+        /// Индексатор для обращения к полям ввода
+        /// </summary>
+        /// <param name="index">номер соответствующего столбца в таблице</param>
+        /// <returns>текст бокс соответствующий индексу</returns>
         public TextBox this[int index]
         {
             get
@@ -158,7 +175,11 @@ namespace csv_reader_wpf
                 }
             }
         }
-
+        /// <summary>
+        ///  обработчик события добавления ячейки в таблицу
+        /// </summary>
+        /// <param name="sender">кнопка вызывающая событие</param>
+        /// <param name="e">аргументы события</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -203,8 +224,12 @@ namespace csv_reader_wpf
             }
 
         }
-
-        private void Burfdsf(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// обработчик события добавления ячейки в таблицу с последующим сохранением в фаил
+        /// </summary>
+        /// <param name="sender">кнопка издатель события</param>
+        /// <param name="e">аргументы события</param>
+        private async void Burfdsf(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -213,8 +238,13 @@ namespace csv_reader_wpf
                 {
                     MessageBox.Show($"Open or create file before save.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
+
                 }
-                File.AppendAllText(main.currentpath, obj.ToString(), Encoding.Unicode);
+                using (var wrt = new StreamWriter(main.currentpath, append: true, encoding: Encoding.Unicode))
+                {
+                        await wrt.WriteAsync(obj.ToString());
+                    MessageBox.Show("Line Saved.", $"Succesfull", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
                 
             }
             catch

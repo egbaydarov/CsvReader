@@ -10,34 +10,60 @@ using System.Windows.Input;
 
 namespace csv_reader_wpf
 {
-    static class DataGridEx
-    {
-
-    }
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Класс представляющий логику приложения а также работу с интерфейсом и таблицей
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Константа смаксимально количество строк таблицы
+        /// </summary>
         public const int MAXROWSCOUNT = 100000;
+        /// <summary>
+        /// Поле диапазона отображаемых строк
+        /// </summary>
         public int rowsFrom = 1, rowsTo = 1;
-
+        /// <summary>
+        /// ссылка на окно добавления записи
+        /// </summary>
         public Window1 addrowwindow;
+        /// <summary>
+        /// текущее положения файла с исходными данными
+        /// </summary>
         public string currentpath;
-
+        /// <summary>
+        /// список данных о кинотеатре
+        /// </summary>
         public List<Cinema> Cinemas = new List<Cinema>();
+        /// <summary>
+        /// список данных о Регионе
+        /// </summary>
         List<Region> regions = new List<Region>();
+        /// <summary>
+        /// список данных о кинотеатра готовый к отображению в Grid View
+        /// </summary>
         public List<GridViewModel> content = new List<GridViewModel>();
+        /// <summary>
+        /// список измененых данных (сортировка, фильтрация)
+        /// </summary>
         public List<GridViewModel> edited = null;
-
+        /// <summary>
+        /// служебная константа содержащая информацию о заголовке таблицы
+        /// </summary>
         const string header = "ROWNUM;CommonName;FullName;ShortName;ChiefOrg;AdmArea;District;" +
             "Address;ChiefName;ChiefPosition;PublicPhone;Fax;Email;WorkingHours;" +
             "ClarificationOfWorkingHours;WebSite;OKPO;INN;NumberOfHalls;TotalSeatsAmount;X_WGS;Y_WGS;GLOBALID;" + "\r\n";
+        /// <summary>
+        /// конструктор главного окна приложения
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
             dataGridView1.ItemsSource = content;
         }
+        /// <summary>
+        /// метод обновления данных для отображения в GridView
+        /// </summary>
         public void UpdateGrid()
         {
             dataGridView1.ItemsSource = null;
@@ -48,9 +74,14 @@ namespace csv_reader_wpf
                 content.Add(Cinemas[i].ToGridView);
             }
             RowsTo.Text = rowsTo.ToString();
+            RowsFrom.Text = rowsFrom.ToString();
             dataGridView1.ItemsSource = content;
         }
-
+        /// <summary>
+        /// обработчик события открытия файла .csv
+        /// </summary>
+        /// <param name="sender">создатель события кнопка</param>
+        /// <param name="e">аргумнты события</param>
         private void Open_Clicked(object sender, RoutedEventArgs e)
         {
             try
@@ -91,7 +122,11 @@ namespace csv_reader_wpf
                 MessageBox.Show($"Can't open file." + er.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        /// обработчик события сохранения файла по пути зранящемуся в "currentpath"
+        /// </summary>
+        /// <param name="sender">издатель события</param>
+        /// <param name="e">аргументы события</param>
         private async void Save_Clicked(object sender, RoutedEventArgs e)
         {
             try
@@ -112,7 +147,11 @@ namespace csv_reader_wpf
             }
             
         }
-
+        /// <summary>
+        /// обраьботчика события нажатия на кнопку сохранения с дополнительным указанием директории
+        /// </summary>
+        /// <param name="sender">кнопка издатель</param>
+        /// <param name="e">аргументы события</param>
         private async void Save_As_Clicked(object sender, RoutedEventArgs e)
         {
 
@@ -145,7 +184,11 @@ namespace csv_reader_wpf
             }
         }
 
-       
+       /// <summary>
+       /// обработчик события нажатия на кнопку добавления записи в тоблицу
+       /// </summary>
+       /// <param name="sender">кнопка издатлель</param>
+       /// <param name="e">аргументы события</param>
         private void AddRow_Clicked(object sender, RoutedEventArgs e)
         {
             if (content.Count == MAXROWSCOUNT)
@@ -166,7 +209,11 @@ namespace csv_reader_wpf
                 addrowwindow.Show();
             }
         }
-
+        /// <summary>
+        /// обработчик события изменения ячейки таблицы
+        /// </summary>
+        /// <param name="sender">ячейка таблицы</param>
+        /// <param name="e">данные об измененной ячейке</param>
         private void DataGridView1_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             var texbox = (TextBox)e.EditingElement;
@@ -182,9 +229,96 @@ namespace csv_reader_wpf
 
 
         }
-
-        private void Sort_Clicked(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// обработчик события изменения диапазона отображаемых строк (левая граница)
+        /// </summary>
+        /// <param name="sender">TextBox издатель</param>
+        /// <param name="e">аргументы события</param>
+        private void RowsCount_TextChanged1(object sender, TextChangedEventArgs e)
         {
+            if (IsLoaded)
+            {
+                TextBox tb;
+                try
+                {
+                    tb = (sender as TextBox);
+                    if (!int.TryParse(tb.Text, out rowsFrom))
+                        throw new IncorrectCinemaDataException("Value should be number");
+                    if (rowsTo - rowsFrom > MAXROWSCOUNT)
+                        throw new IncorrectCinemaDataException($"Max rows count is {MAXROWSCOUNT}");
+                    if (rowsTo > Cinemas.Count || rowsFrom < 1)
+                        throw new IncorrectCinemaDataException($"Rows count out of range");
+                    if (rowsTo < rowsFrom)
+                        throw new IncorrectCinemaDataException($"Left value less than right value");
+                    UpdateGrid();
+                }
+
+                catch (Exception er)
+                {
+                    tb = (sender as TextBox);
+                    tb.Text = "1";
+                    rowsFrom = 1;
+                    MessageBox.Show($"Incorrect value for rows count. " + er.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        /// <summary>
+        /// событие фильтрации
+        /// </summary>
+        /// <param name="sender">тестбокс с даннвми для фильтрации</param>
+        /// <param name="e">аргументы фильтрации</param>
+        private void FILTEr_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            GridViewModel[] temp = new GridViewModel[content.Count];
+            try
+            {   if (IsLoaded)
+                {
+                    if (String.IsNullOrEmpty(FILTEr.Text))
+                    {
+                        MessageBox.Show("Filter is empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    switch (ToFilterComboBox.Text)
+                    {
+
+                        case "District":
+                            content.CopyTo(temp);
+                            edited = temp.ToList()
+                                .AsQueryable()
+                                .Where(x => x.District.Contains(FILTEr.Text))
+                                .ToList();
+                            dataGridView1.ItemsSource = null;
+                            dataGridView1.ItemsSource = edited;
+
+                            break;
+                        case "AdmArea":
+                            content.CopyTo(temp);
+                            edited = temp.ToList()
+                                .AsQueryable()
+                                .Where(x => x.AdmArea.Contains(FILTEr.Text))
+                                .ToList();
+                            dataGridView1.ItemsSource = null;
+                            dataGridView1.ItemsSource = edited;
+                            break;
+                        default:
+                            MessageBox.Show("Choose column in combo box", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Can't filter this.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        /// <summary>
+        /// событие сортировки
+        /// </summary>
+        /// <param name="sender">Комбобокс - издаетль</param>
+        /// <param name="e">аргументы события</param>
+        private void ToSortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
 
             GridViewModel[] temp = new GridViewModel[content.Count];
             try
@@ -216,79 +350,23 @@ namespace csv_reader_wpf
                 MessageBox.Show("Can't sort this.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-        private void Filter_Clicked(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Сбросить фильтры
+        /// </summary>
+        /// <param name="sender">кнопка- издатель</param>
+        /// <param name="e">аргументы события</param>
+        private void Reset_Clicked(object sender, RoutedEventArgs e)
         {
-            GridViewModel[] temp = new GridViewModel[content.Count];
-            try
-            {
-                if (String.IsNullOrEmpty(FILTEr.Text))
-                {
-                    MessageBox.Show("Filter is empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                switch (ToFilterComboBox.Text)
-                {
-
-                    case "District":
-                        content.CopyTo(temp);
-                        edited = temp.ToList()
-                            .AsQueryable()
-                            .Where(x => x.District.Contains(FILTEr.Text))
-                            .ToList();
-                        dataGridView1.ItemsSource = null;
-                        dataGridView1.ItemsSource = edited;
-
-                        break;
-                    case "AdmArea":
-                        content.CopyTo(temp);
-                        edited = temp.ToList()
-                            .AsQueryable()
-                            .Where(x => x.AdmArea.Contains(FILTEr.Text))
-                            .ToList();
-                        dataGridView1.ItemsSource = null;
-                        dataGridView1.ItemsSource = edited;
-                        break;
-                    default:
-                        MessageBox.Show("Choose column in combo box", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Can't filter this.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            rowsFrom = 1;
+            rowsTo = Cinemas.Count;
+            UpdateGrid();
         }
 
-        private void RowsCount_TextChanged1(object sender, TextChangedEventArgs e)
-        {
-            if (IsLoaded)
-            {
-                TextBox tb;
-                try
-                {
-                    tb = (sender as TextBox);
-                    if (!int.TryParse(tb.Text, out rowsFrom))
-                        throw new IncorrectCinemaDataException("Value should be number");
-                    if (rowsTo - rowsFrom > MAXROWSCOUNT)
-                        throw new IncorrectCinemaDataException($"Max rows count is {MAXROWSCOUNT}");
-                    if (rowsTo > Cinemas.Count || rowsFrom < 1)
-                        throw new IncorrectCinemaDataException($"Rows count out of range");
-                    if (rowsTo < rowsFrom)
-                        throw new IncorrectCinemaDataException($"Left value less than right value");
-                    UpdateGrid();
-                }
-
-                catch (Exception er)
-                {
-                    tb = (sender as TextBox);
-                    tb.Text = "1";
-                    rowsFrom = 1;
-                    MessageBox.Show($"Incorrect value for rows count. " + er.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
-
+        /// <summary>
+        /// обработчик события изменеия диапазона отображаемых строк (правая граница)
+        /// </summary>
+        /// <param name="sender">TextBox издатель</param>
+        /// <param name="e">Аргументы события</param>
         private void RowsCount_TextChanged2(object sender, TextChangedEventArgs e)
         {
             if (IsLoaded)

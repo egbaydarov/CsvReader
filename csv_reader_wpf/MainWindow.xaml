@@ -35,20 +35,16 @@
                         <ComboBoxItem>AdmArea</ComboBoxItem>
                         <ComboBoxItem>District</ComboBoxItem>
                     </ComboBox>
-                    <TextBox x:Name="FILTEr" Margin="0,0,0,-0.4" Width="67" Text="Filter Data"/>
-                    <Button Click="Filter_Clicked"  VerticalAlignment="Stretch" Margin="0,0,14,0">
-                        <Button.Content>
-                            <TextBlock><Bold>Filter</Bold></TextBlock>
-                        </Button.Content>
-                    </Button>
+                    <TextBox x:Name="FILTEr" Margin="0,0,0,-0.4" Width="67" Text="Filter Data" TextChanged="FILTEr_TextChanged"/>
+                    
                     <Label Content="Sort: " FontStyle="Oblique" VerticalAlignment="Stretch"/>
-                    <ComboBox x:Name="ToSortComboBox" Margin="0,0,0,-0.4" Width="86">
+                    <ComboBox x:Name="ToSortComboBox" Margin="0,0,0,-0.4" Width="86" SelectionChanged="ToSortComboBox_SelectionChanged">
                         <ComboBoxItem>FullName</ComboBoxItem>
                         <ComboBoxItem>District</ComboBoxItem>
                     </ComboBox>
-                    <Button Click="Sort_Clicked" VerticalAlignment="Stretch" Margin="0,0,14,0">
+                    <Button Click="Reset_Clicked"  VerticalAlignment="Stretch" Margin="0,0,14,0">
                         <Button.Content>
-                            <TextBlock><Bold>Sort</Bold></TextBlock>
+                            <TextBlock><Bold>Reset</Bold></TextBlock>
                         </Button.Content>
                     </Button>
                 </ToolBar>

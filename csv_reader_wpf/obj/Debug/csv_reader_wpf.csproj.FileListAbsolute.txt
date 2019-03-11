@@ -15,3 +15,4 @@ C:\Users\maste\Desktop\KDZ\PROGA\csv_reader_wpf\csv_reader_wpf\obj\Debug\csv_rea
 C:\Users\maste\Desktop\KDZ\PROGA\csv_reader_wpf\csv_reader_wpf\obj\Debug\csv_reader_wpf.pdb
 C:\Users\maste\Desktop\KDZ\PROGA\csv_reader_wpf\csv_reader_wpf\obj\Debug\Window1.g.cs
 C:\Users\maste\Desktop\KDZ\PROGA\csv_reader_wpf\csv_reader_wpf\obj\Debug\Window1.baml
+C:\Users\maste\Desktop\KDZ\PROGA\csv_reader_wpf\csv_reader_wpf\bin\Debug\csv_reader_wpf.xml

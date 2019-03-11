@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace csv_reader_wpf
 {
+    /// <summary>
+    /// класс описывающий модель данных для таблицы Grid View
+    /// </summary>
     public class GridViewModel
     {
+        /// <summary>
+        /// конструктор экземпляра модели
+        /// </summary>
+        /// <param name="cinema">данные о кинотеатре</param>
         public GridViewModel(Cinema cinema)
         {
             for (int i = 0; i < 5; i++)
@@ -20,6 +27,11 @@ namespace csv_reader_wpf
                 this[i] = cinema[i - 2];
             }
         }
+        /// <summary>
+        /// индексатор для столбцов таблицы
+        /// </summary>
+        /// <param name="index">номер столбца 0 - 22</param>
+        /// <returns>ячейку соответствующего столбца</returns>
         public string this[int index]
         {
             get
@@ -156,31 +168,105 @@ namespace csv_reader_wpf
                 }
             }
         }
+        
         #region Columns
+        /// <summary>
+        /// Номер столбца
+        /// </summary>
         public string ROWNUM { get; set; }
+        /// <summary>
+        /// Имя
+        /// </summary>
         public string CommonName { get; set; }
+        /// <summary>
+        /// полное имя
+        /// </summary>
         public string FullName { get; set; }
+        /// <summary>
+        /// сокращенное имя
+        /// </summary>
         public string ShortName { get; set; }
+        /// <summary>
+        /// Главная организация
+        /// </summary>
         public string ChiefOrg { get; set; }
+        /// <summary>
+        /// Административный округ
+        /// </summary>
         public string AdmArea { get; set; }
+        /// <summary>
+        /// Район
+        /// </summary>
         public string District { get; set; }
+        /// <summary>
+        /// Адресс
+        /// </summary>
         public string Address { get; set; }
+        /// <summary>
+        /// Имя главного
+        /// </summary>
         public string ChiefName { get; set; }
+        /// <summary>
+        /// Должность главного
+        /// </summary>
         public string ChiefPosition { get; set; }
+        /// <summary>
+        /// Телефон
+        /// </summary>
         public string PublicPhone { get; set; }
+        /// <summary>
+        /// Факс
+        /// </summary>
         public string Fax { get; set; }
+        /// <summary>
+        /// Почта
+        /// </summary>
         public string Email { get; set; }
+        /// <summary>
+        /// График работы
+        /// </summary>
         public string WorkingHours { get; set; }
+       /// <summary>
+       /// Clarification of Working Hours
+       /// </summary>
         public string ClarificationOfWorkingHours { get; set; }
+        /// <summary>
+        /// Веб-сайт
+        /// </summary>
         public string WebSite { get; set; }
+        /// <summary>
+        /// OKPO
+        /// </summary>
         public string OKPO { get; set; }
+        /// <summary>
+        /// INN
+        /// </summary>
         public string INN { get; set; }
+        /// <summary>
+        /// Количество помещений
+        /// </summary>
         public string NumberOfHalls { get; set; }
+        /// <summary>
+        /// Количество сидячих мест
+        /// </summary>
         public string TotalSeatsAmount { get; set; }
+        /// <summary>
+        /// какая-то цифра
+        /// </summary>
         public string X_WGS { get; set; }
+        /// <summary>
+        /// какая-то цифра 2
+        /// </summary>
         public string Y_WGS { get; set; }
+        /// <summary>
+        /// Глобальный идентификатор
+        /// </summary>
         public string GLOBALID { get; set; }
         #endregion
+        /// <summary>
+        /// переопределенный ToString для строки таблицы
+        /// </summary>
+        /// <returns>строковое представление строки таблица в формате csv</returns>
         public override string ToString()
         {
             string res = "";
