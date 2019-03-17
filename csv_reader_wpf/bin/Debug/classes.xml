@@ -1,0 +1,592 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>csv_reader_wpf</name>
+    </assembly>
+    <members>
+        <member name="T:csv_reader_wpf.GridViewModel">
+            <summary>
+            класс описывающий модель данных для таблицы Grid View
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.GridViewModel.#ctor(csv_reader_wpf.Cinema)">
+            <summary>
+            конструктор экземпляра модели
+            </summary>
+            <param name="cinema">данные о кинотеатре</param>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.Item(System.Int32)">
+            <summary>
+            индексатор для столбцов таблицы
+            </summary>
+            <param name="index">номер столбца 0 - 22</param>
+            <returns>ячейку соответствующего столбца</returns>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.ROWNUM">
+            <summary>
+            Номер столбца
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.CommonName">
+            <summary>
+            Имя
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.FullName">
+            <summary>
+            полное имя
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.ShortName">
+            <summary>
+            сокращенное имя
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.ChiefOrg">
+            <summary>
+            Главная организация
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.AdmArea">
+            <summary>
+            Административный округ
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.District">
+            <summary>
+            Район
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.Address">
+            <summary>
+            Адресс
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.ChiefName">
+            <summary>
+            Имя главного
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.ChiefPosition">
+            <summary>
+            Должность главного
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.PublicPhone">
+            <summary>
+            Телефон
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.Fax">
+            <summary>
+            Факс
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.Email">
+            <summary>
+            Почта
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.WorkingHours">
+            <summary>
+            График работы
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.ClarificationOfWorkingHours">
+            <summary>
+            Clarification of Working Hours
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.WebSite">
+            <summary>
+            Веб-сайт
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.OKPO">
+            <summary>
+            OKPO
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.INN">
+            <summary>
+            INN
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.NumberOfHalls">
+            <summary>
+            Количество помещений
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.TotalSeatsAmount">
+            <summary>
+            Количество сидячих мест
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.X_WGS">
+            <summary>
+            какая-то цифра
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.Y_WGS">
+            <summary>
+            какая-то цифра 2
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.GridViewModel.GLOBALID">
+            <summary>
+            Глобальный идентификатор
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.GridViewModel.ToString">
+            <summary>
+            переопределенный ToString для строки таблицы
+            </summary>
+            <returns>строковое представление строки таблица в формате csv</returns>
+        </member>
+        <member name="T:csv_reader_wpf.Region">
+            <summary>
+            класс представляющий информацию об округе
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.Region.#ctor(System.String,System.String)">
+            <summary>
+            конструктор округа
+            </summary>
+            <param name="admArea">название округа</param>
+            <param name="district">название района</param>
+        </member>
+        <member name="P:csv_reader_wpf.Region.AdmArea">
+            <summary>
+            свойство округ
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Region.District">
+            <summary>
+            свойство район
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.Region.op_Equality(csv_reader_wpf.Region,csv_reader_wpf.Region)">
+            <summary>
+            перегруженный оператор для сравнения равенства округов
+            </summary>
+            <param name="rg1">левый операнд</param>
+            <param name="rg2">правый операнд</param>
+            <returns></returns>
+        </member>
+        <member name="M:csv_reader_wpf.Region.op_Inequality(csv_reader_wpf.Region,csv_reader_wpf.Region)">
+            <summary>
+            перегруженный оператор для сравнения неравенства округов
+            </summary>
+            <param name="rg1">левый операнд</param>
+            <param name="rg2">правый операнд</param>
+            <returns></returns>
+        </member>
+        <member name="T:csv_reader_wpf.Window1">
+            <summary>
+            Класс создания новой записи в таблице
+            </summary>
+            <summary>
+            Window1
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.Window1.cin">
+            <summary>
+            Объект кинотеатра
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.Window1.obj">
+            <summary>
+            Объект для создания представления кинотеатра в таблице
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.Window1.main">
+            <summary>
+            ссылка на основное окно
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.Window1.#ctor(csv_reader_wpf.MainWindow)">
+            <summary>
+            конструктор окна создания записи кинотеатра
+            </summary>
+            <param name="main"></param>
+        </member>
+        <member name="P:csv_reader_wpf.Window1.Item(System.Int32)">
+            <summary>
+            Индексатор для обращения к полям ввода
+            </summary>
+            <param name="index">номер соответствующего столбца в таблице</param>
+            <returns>текст бокс соответствующий индексу</returns>
+        </member>
+        <member name="M:csv_reader_wpf.Window1.Button_Click(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+             обработчик события добавления ячейки в таблицу
+            </summary>
+            <param name="sender">кнопка вызывающая событие</param>
+            <param name="e">аргументы события</param>
+        </member>
+        <member name="M:csv_reader_wpf.Window1.Burfdsf(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            обработчик события добавления ячейки в таблицу с последующим сохранением в фаил
+            </summary>
+            <param name="sender">кнопка издатель события</param>
+            <param name="e">аргументы события</param>
+        </member>
+        <member name="M:csv_reader_wpf.Window1.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:csv_reader_wpf.App">
+            <summary>
+            Interaction logic for App.xaml
+            </summary>
+            <summary>
+            App
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.App.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.App.Main">
+            <summary>
+            Application Entry Point.
+            </summary>
+        </member>
+        <member name="T:csv_reader_wpf.IncorrectCinemaDataException">
+            <summary>
+            класс исключений возникающих при работе с объектами кинотеатра
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.IncorrectCinemaDataException.#ctor">
+            <summary>
+            Конструктор исключения без параметров
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.IncorrectCinemaDataException.#ctor(System.String)">
+            <summary>
+            Конструктор исключения с сообщением
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:csv_reader_wpf.IncorrectCinemaDataException.#ctor(System.String,System.Exception)">
+            <summary>
+            Конструктор исключения с сообщением  и унаследованным типом исключения
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="M:csv_reader_wpf.IncorrectCinemaDataException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            конструктор исключения с информацией о сериализации и контекстным потоком
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:csv_reader_wpf.Cinema">
+            <summary>
+            класс представляющий кинотеатр
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.Cinema.#ctor">
+            <summary>
+            конструктор без параметров
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.Cinema.#ctor(System.Collections.Generic.List{System.String},csv_reader_wpf.Region)">
+            <summary>
+            конструктор коасса кинотеатра состоящего в отношении агрегации с классом округа
+            </summary>
+            <param name="columns">массив строк - ячеек столбцов кинотеатра</param>
+            <param name="region">экземпляр округа</param>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.ToGridView">
+            <summary>
+            возвращает экзеимпляр кинотеатра в вие модели для таблицы Grid View
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.Cinema.IsValid(System.String)">
+            <summary>
+            проверка строки на валидность для создания экземпляра кинотеатр
+            </summary>
+            <param name="data">входная строка</param>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.Item(System.Int32)">
+            <summary>
+            проиндексированные значения для столбцов таблицы
+            </summary>
+            <param name="index">индекс столбца</param>
+            <returns>строковое представление ячейки столбца</returns>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.region">
+            <summary>
+            Поле с информацие об округе кинотеатра
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.ROWNUM">
+            <summary>
+            Номер столбца
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.CommonName">
+            <summary>
+            Имя
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.FullName">
+            <summary>
+            полное имя
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.ShortName">
+            <summary>
+            сокращенное имя
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.ChiefOrg">
+            <summary>
+            Главная организация
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.Address">
+            <summary>
+            Адресс
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.ChiefName">
+            <summary>
+            Имя главного
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.ChiefPosition">
+            <summary>
+            Должность главного
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.PublicPhone">
+            <summary>
+            Телефон
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.Fax">
+            <summary>
+            Факс
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.Email">
+            <summary>
+            Почта
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.WorkingHours">
+            <summary>
+            График работы
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.ClarificationOfWorkingHours">
+            <summary>
+            Clarification of Working Hours
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.WebSite">
+            <summary>
+            Веб-сайт
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.OKPO">
+            <summary>
+            OKPO
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.INN">
+            <summary>
+            INN
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.NumberOfHalls">
+            <summary>
+            Количество помещений
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.TotalSeatsAmount">
+            <summary>
+            Количество сидячих мест
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.X_WGS">
+            <summary>
+            какая-то цифра
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.Y_WGS">
+            <summary>
+            какая-то цифра 2
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Cinema.GLOBALID">
+            <summary>
+            Глобальный идентификатор
+            </summary>
+        </member>
+        <member name="T:csv_reader_wpf.MainWindow">
+            <summary>
+            Класс представляющий логику приложения а также работу с интерфейсом и таблицей
+            </summary>
+            <summary>
+            MainWindow
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.MAXROWSCOUNT">
+            <summary>
+            Константа смаксимально количество строк таблицы
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.rowsFrom">
+            <summary>
+            Поле диапазона отображаемых строк
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.rowsTo">
+            <summary>
+            Поле диапазона отображаемых строк
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.addrowwindow">
+            <summary>
+            ссылка на окно добавления записи
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.currentpath">
+            <summary>
+            текущее положения файла с исходными данными
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.Cinemas">
+            <summary>
+            список данных о кинотеатре
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.regions">
+            <summary>
+            список данных о Регионе
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.content">
+            <summary>
+            список данных о кинотеатра готовый к отображению в Grid View
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.edited">
+            <summary>
+            список измененых данных (сортировка, фильтрация)
+            </summary>
+        </member>
+        <member name="F:csv_reader_wpf.MainWindow.header">
+            <summary>
+            служебная константа содержащая информацию о заголовке таблицы
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.#ctor">
+            <summary>
+            конструктор главного окна приложения
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.UpdateGrid">
+            <summary>
+            метод обновления данных для отображения в GridView
+            </summary>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.Open_Clicked(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            обработчик события открытия файла .csv
+            </summary>
+            <param name="sender">создатель события кнопка</param>
+            <param name="e">аргумнты события</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.Save_Clicked(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            обработчик события сохранения файла по пути зранящемуся в "currentpath"
+            </summary>
+            <param name="sender">издатель события</param>
+            <param name="e">аргументы события</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.Save_As_Clicked(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            обраьботчика события нажатия на кнопку сохранения с дополнительным указанием директории
+            </summary>
+            <param name="sender">кнопка издатель</param>
+            <param name="e">аргументы события</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.AddRow_Clicked(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            обработчик события нажатия на кнопку добавления записи в тоблицу
+            </summary>
+            <param name="sender">кнопка издатлель</param>
+            <param name="e">аргументы события</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.DataGridView1_CellEditEnding(System.Object,System.Windows.Controls.DataGridCellEditEndingEventArgs)">
+            <summary>
+            обработчик события изменения ячейки таблицы
+            </summary>
+            <param name="sender">ячейка таблицы</param>
+            <param name="e">данные об измененной ячейке</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.RowsCount_TextChanged1(System.Object,System.Windows.Controls.TextChangedEventArgs)">
+            <summary>
+            обработчик события изменения диапазона отображаемых строк (левая граница)
+            </summary>
+            <param name="sender">TextBox издатель</param>
+            <param name="e">аргументы события</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.FILTEr_TextChanged(System.Object,System.Windows.Controls.TextChangedEventArgs)">
+            <summary>
+            событие фильтрации
+            </summary>
+            <param name="sender">тестбокс с даннвми для фильтрации</param>
+            <param name="e">аргументы фильтрации</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.ToSortComboBox_SelectionChanged(System.Object,System.Windows.Controls.SelectionChangedEventArgs)">
+            <summary>
+            событие сортировки
+            </summary>
+            <param name="sender">Комбобокс - издаетль</param>
+            <param name="e">аргументы события</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.Reset_Clicked(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Сбросить фильтры
+            </summary>
+            <param name="sender">кнопка- издатель</param>
+            <param name="e">аргументы события</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.RowsCount_TextChanged2(System.Object,System.Windows.Controls.TextChangedEventArgs)">
+            <summary>
+            обработчик события изменеия диапазона отображаемых строк (правая граница)
+            </summary>
+            <param name="sender">TextBox издатель</param>
+            <param name="e">Аргументы события</param>
+        </member>
+        <member name="M:csv_reader_wpf.MainWindow.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:csv_reader_wpf.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:csv_reader_wpf.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

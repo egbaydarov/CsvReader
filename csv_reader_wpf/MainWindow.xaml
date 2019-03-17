@@ -11,12 +11,12 @@
         >
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="28"></RowDefinition>
             <RowDefinition Height="100*"/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0">
-            <ToolBarTray  DockPanel.Dock="Top" HorizontalAlignment="Stretch" Width="952">
-                <ToolBar Margin="0,0,-93.6,0" >
+            <ToolBarTray  DockPanel.Dock="Top" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                <ToolBar  >
                     <Button Click="Open_Clicked" Content="Open" VerticalAlignment="Stretch" />
                     <Button Click="Save_Clicked" Content="Save"  VerticalAlignment="Stretch"/>
                     <Button Click="Save_As_Clicked" Content="Save As" VerticalAlignment="Stretch" Margin="0,0,14,0" />
@@ -36,7 +36,7 @@
                         <ComboBoxItem>District</ComboBoxItem>
                     </ComboBox>
                     <TextBox x:Name="FILTEr" Margin="0,0,0,-0.4" Width="67" Text="Filter Data" TextChanged="FILTEr_TextChanged"/>
-                    
+
                     <Label Content="Sort: " FontStyle="Oblique" VerticalAlignment="Stretch"/>
                     <ComboBox x:Name="ToSortComboBox" Margin="0,0,0,-0.4" Width="86" SelectionChanged="ToSortComboBox_SelectionChanged">
                         <ComboBoxItem>FullName</ComboBoxItem>
@@ -50,6 +50,6 @@
                 </ToolBar>
             </ToolBarTray>
         </DockPanel>
-        <DataGrid  Grid.Row="1" x:Name="dataGridView1" CellEditEnding="DataGridView1_CellEditEnding"/>
+        <DataGrid  Grid.Row="1" x:Name="dataGridView1" CellEditEnding="DataGridView1_CellEditEnding" Grid.ColumnSpan="2" Margin="0,0,0.4,-0.2"/>
     </Grid>
 </Window>

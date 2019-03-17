@@ -275,7 +275,7 @@ namespace csv_reader_wpf
                 {
                     if (String.IsNullOrEmpty(FILTEr.Text))
                     {
-                        MessageBox.Show("Filter is empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        //MessageBox.Show("Filter is empty", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     switch (ToFilterComboBox.Text)
@@ -323,16 +323,16 @@ namespace csv_reader_wpf
             GridViewModel[] temp = new GridViewModel[content.Count];
             try
             {
-                switch (ToSortComboBox.Text)
+                switch ((sender as ComboBox).SelectedIndex)
                 {
-                    case "District":
+                    case 1:
                         content.CopyTo(temp);
                         edited = temp.ToList();
                         edited.Sort((a, b) => a.District.CompareTo(b.District));
                         dataGridView1.ItemsSource = null;
                         dataGridView1.ItemsSource = edited;
                         break;
-                    case "FullName":
+                    case 0:
                         content.CopyTo(temp);
                         edited = temp.ToList();
                         edited.Sort((a, b) => a.FullName.CompareTo(b.FullName));
@@ -340,12 +340,12 @@ namespace csv_reader_wpf
                         dataGridView1.ItemsSource = edited;
                         break;
                     default:
-                        MessageBox.Show("Choose column in the Combo box", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        //MessageBox.Show("", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
                 }
 
             }
-            catch (Exception ex)
+            catch 
             {
                 MessageBox.Show("Can't sort this.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
